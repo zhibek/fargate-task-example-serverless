@@ -1,0 +1,26 @@
+service: fargate-task-example-serverless
+
+frameworkVersion: '^3'
+
+provider:
+  name: aws
+  region: eu-west-1
+  ecr:
+    images:
+      example-task:
+        path: ./
+        file: Dockerfile
+
+plugins:
+  - serverless-fargate
+
+fargate:
+  clusterName: fargate-task-example-serverless-${sls:stage}
+  vpc:
+    securityGroupIds: ${file(./vars.js):securityGroupIds} # Use VPC default securityGroupIds
+    subnetIds: ${file(./vars.js):subnetIds} # Use VPC default subnetIds
+    assignPublicIp: true
+  tasks:
+    example-task:
+      image: example-task
+      schedule: ${file(./vars.js):timeAsCron} # Run 5 mins after deploy initialised

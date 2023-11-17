@@ -1,0 +1,13 @@
+{
+  "name": "fargate-task-example-serverless",
+  "version": "1.0.0",
+  "license": "MIT",
+  "devDependencies": {
+    "serverless": "^3.36.0",
+    "serverless-fargate": "^0.0.12"
+  },
+  "scripts": {
+    "setup": "sls deploy",
+    "cleanup": "sls remove"
+  }
+}
